@@ -1,0 +1,18 @@
+{
+  "name": "Name",
+  "description": "Desc",
+  "main": "gulpfile.js",
+  "authors": [
+    "Leo Verkhovtsev"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
