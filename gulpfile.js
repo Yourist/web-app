@@ -3,7 +3,6 @@ var
 	gulp        = require('gulp'),
 	jade        = require('gulp-jade'),//компилятор jade
 	browserSync = require('browser-sync').create(),//livereload + local server
-	browserify  = require('gulp-browserify'),//сборщик js файлов
 	uglify      = require('gulp-uglify'),//минификация js файлов
 	rename      = require("gulp-rename"),//переименовывание файлов
 	plumber     = require('gulp-plumber'),//Не дает галпу остановиться с ошибкой
@@ -17,12 +16,13 @@ var
 var
 	paths = {
 		build:{//файлы для выгрузки
-			html:  'dist/',
-			js:	   'dist/js',
-			css:   'dist/styles',
-			img:   'dist/img/main',
-			sprite:'dist/img/sprite',
-			fonts: 'dist/fonts'
+			html:        'dist/',
+			js:	         'dist/js',
+			css:         'dist/styles',
+			img:         'dist/img/main',
+			sprite:      'dist/img/sprite',
+			fonts:       'dist/fonts',
+			spritepath:  '../img/sprite/sprite.png'
 		},
 		dev:{//исходники
 			jade:      '-dev/markups/pages/*.jade',
@@ -30,6 +30,7 @@ var
 			style:     '-dev/styles/main.scss',
 			sprite:    '-dev/img/sprite/**/*.*',
 			img:       '-dev/img/main/**/*.*',
+			spritimg:  '-dev/img/sprite',
 			spritescss:'-dev/styles/sprite',
 			fonts:     '-dev/fonts/**/*.*'
 		},
@@ -41,10 +42,10 @@ var
 			fonts:'-dev/fonts/**/*.*'
 		},
 		browserSync: {
-			baseDir:'build',
-			watchPaths: ['build/**/*.*']
+			baseDir:'dist',
+			watchPaths: ['dist/**/*.*']
 		},
-		clean: 'build',
+		clean: 'dist',
 };
 
 
@@ -57,7 +58,7 @@ gulp.task('jade', function() {
 		}))
 		.pipe(gulp.dest(paths.build.html));
 });
-/* --------- fonts --------- */
+/* --------- other --------- */
 gulp.task('other', function() {
 	gulp.src(paths.dev.fonts)
 		.pipe(gulp.dest(paths.build.fonts));
@@ -92,9 +93,10 @@ gulp.task('sprite', function () {
 		.pipe(spritesmith({
 			imgName: 'sprite.png',
 			cssName: 'sprite.scss',
-			padding: 70
+			padding: 70,
+			imgPath: paths.build.spritepath
 		}));
-	spriteData.img.pipe(gulp.dest(paths.dev.sprite));
+	spriteData.img.pipe(gulp.dest(paths.build.sprite));
 	spriteData.css.pipe(gulp.dest(paths.dev.spritescss));
 });
 /* --------- watch --------- */
