@@ -6,6 +6,7 @@
 
 .item{
   display: block;
+  @include sprite($a-13-);
 
 }
 
